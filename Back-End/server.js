@@ -7,7 +7,13 @@ import user from "./routers/user.js"
 const app=express()
 const port=3000
 
-app.use(express.json())
+// Middleware to parse URL-encoded bodies (as sent by HTML forms)
+app.use(express.urlencoded({ extended: true }));
+
+// Middleware to parse JSON bodies
+app.use(express.json());
+
+
 app.use(cors())
 app.use('/',user)
 
