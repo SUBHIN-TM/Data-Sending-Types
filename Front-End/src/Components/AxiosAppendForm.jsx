@@ -7,7 +7,6 @@ const AxiosAppendForm = () => {
         number: ''
     });
 
-
     const handleChange = (e) => {
         const { name, value } = e.target;
         setFormData((prevData) => ({
@@ -16,20 +15,23 @@ const AxiosAppendForm = () => {
         }));
     };
 
-
     const handleSubmit = async (e) => {
         e.preventDefault(); // Prevent the default form submission behavior
 
-
-        // Using Axios with FormData for more control not mandatory if we give in AXIOS HEADER = Content-Type': 'application/x-www-form-urlencoded
-        const formDataConvert = new FormData();
-        formDataConvert.append('name', formData.name);
-        formDataConvert.append('email', formData.number);
-
+        //! IF WE USE FORM DATA TO CHANGE THE NAME OF FORM CONTENT ,THEN TYPE IS CHANGED TO MULTIPART FORM DATA, THEN IN SERVER SIDE IT REQUIRE MULTER , SO WE SEND LIKE THIS, BEST METHOD IS ADD URL ENCODED IN HEADER WAY
+        // const formDataConvert = new FormData();
+        // formDataConvert.append('name', formData.name);
+        // formDataConvert.append('number', formData.number);
+    
+        const urlEncodedData = new URLSearchParams();
+        urlEncodedData.append('USERNAME', formData.name);
+        urlEncodedData.append('USERNUMBER', formData.number);
 
         try {
-            const response = await axios.post('http://localhost:3000/axiosAppendFormData', formDataConvert, {
-                
+            const response = await axios.post('http://localhost:3000/axiosAppendFormData', urlEncodedData, {
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded'
+                }
             });
             console.log('Form submitted successfully:', response.data);
         } catch (error) {
@@ -39,7 +41,7 @@ const AxiosAppendForm = () => {
 
     return (
         <>
-            <div>Axios Form Data URL ENCODED </div>
+            <div>Axios Form Data URL ENCODED</div>
             <div style={{ padding: '20px' }}>
                 <form onSubmit={handleSubmit}>
                     <label style={{ marginRight: '10px' }} htmlFor="name">Name</label>
