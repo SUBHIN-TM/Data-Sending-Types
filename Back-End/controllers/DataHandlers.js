@@ -24,3 +24,9 @@ export const axiosAppendFormData =(req,res)=>{
     console.log("axios APPEND NEW FORM data Submission");
     console.log(req.body);
 }
+
+
+export const QueryData =(req,res)=>{
+    console.log("Query data Submission");
+    console.log(req.query);
+}
