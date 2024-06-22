@@ -30,3 +30,8 @@ export const QueryData =(req,res)=>{
     console.log("Query data Submission");
     console.log(req.query);
 }
+
+export const ParamData =(req,res)=>{
+    console.log("Param data Submission");
+    console.log(req.params);
+}
